@@ -1,6 +1,5 @@
 package com.siva.spring_security_demo.controller;
 
-
 import com.siva.spring_security_demo.model.Student;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.web.csrf.CsrfToken;
@@ -15,21 +14,22 @@ import java.util.List;
 @RestController
 public class StudentController {
 
-    List<Student> students = new ArrayList<>(List.of(new Student("siva", 1), new Student("Ranjani", 2)));
+	List<Student> students = new ArrayList<>(List.of(new Student("siva", 1), new Student("Ranjani", 2)));
 
-    @GetMapping("/getAllStudents")
-    public List<Student> getStudents() {
-        return students;
-    }
+	@GetMapping("/getAllStudents")
+	public List<Student> getStudents() {
+		return students;
+	}
 
-    @PostMapping("/add")
-    public List<Student> addStudent(@RequestBody Student student) {
-        students.add(student);
-        return students;
-    }
+	@PostMapping("/add")
+	public List<Student> addStudent(@RequestBody Student student) {
+		students.add(student);
+		return students;
+	}
 
-    @GetMapping("/csrf-token")
-    public CsrfToken getToekn(HttpServletRequest request){
-        return (CsrfToken) request.getAttribute("_csrf");
-    }
+	@GetMapping("/csrf-token")
+	public CsrfToken getToekn(HttpServletRequest request) {
+		return (CsrfToken) request.getAttribute("_csrf");
+	}
+
 }

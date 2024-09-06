@@ -16,19 +16,20 @@ import java.util.Objects;
 @Slf4j
 public class MyUserDetailsService implements UserDetailsService {
 
-    @Autowired
-    private UserRepository userRepository;
+	@Autowired
+	private UserRepository userRepository;
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        User user = userRepository.findByName(username);
-        if (Objects.isNull(user)) {
-            log.info("incorrect user details not authorized:");
-            throw new UsernameNotFoundException(" user not found");
-        }
+		User user = userRepository.findByName(username);
+		if (Objects.isNull(user)) {
+			log.info("incorrect user details not authorized:");
+			throw new UsernameNotFoundException(" user not found");
+		}
 
-        log.info("User Authenticated");
-        return new UserPrinciple(user);
-    }
+		log.info("User Authenticated");
+		return new UserPrinciple(user);
+	}
+
 }

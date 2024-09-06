@@ -14,38 +14,40 @@ import org.slf4j.LoggerFactory;
 @Component
 public class LoggingAspect {
 
-    private static final Logger logger = LoggerFactory.getLogger(LoggingAspect.class);
+	private static final Logger logger = LoggerFactory.getLogger(LoggingAspect.class);
 
-    // Define a pointcut for any method within the specified packages
-    @Pointcut("execution(* com.siva.spring_security_demo.controller..*(..)) || " +
-            "execution(* com.siva.spring_security_demo.service..*(..)) || " +
-            "execution(* com.siva.spring_security_demo.repository..*(..))")
-    public void applicationPackagePointcut() {
-        // Pointcut definition
-    }
+	// Define a pointcut for any method within the specified packages
+	@Pointcut("execution(* com.siva.spring_security_demo.controller..*(..)) || "
+			+ "execution(* com.siva.spring_security_demo.service..*(..)) || "
+			+ "execution(* com.siva.spring_security_demo.repository..*(..))")
+	public void applicationPackagePointcut() {
+		// Pointcut definition
+	}
 
-    // Before advice: log method entry details
-    @Before("applicationPackagePointcut()")
-    public void logBeforeMethodExecution(JoinPoint joinPoint) {
-        String methodName = joinPoint.getSignature().getName();
-        String className = joinPoint.getTarget().getClass().getSimpleName();
-        Object[] args = joinPoint.getArgs();
-        logger.info("Entering method: {}.{} with arguments {}", className, methodName, args);
-    }
+	// Before advice: log method entry details
+	@Before("applicationPackagePointcut()")
+	public void logBeforeMethodExecution(JoinPoint joinPoint) {
+		String methodName = joinPoint.getSignature().getName();
+		String className = joinPoint.getTarget().getClass().getSimpleName();
+		Object[] args = joinPoint.getArgs();
+		logger.info("Entering method: {}.{} with arguments {}", className, methodName, args);
+	}
 
-    // After returning advice: log method return details
-    @AfterReturning(pointcut = "applicationPackagePointcut()", returning = "result")
-    public void logAfterMethodExecution(JoinPoint joinPoint, Object result) {
-        String methodName = joinPoint.getSignature().getName();
-        String className = joinPoint.getTarget().getClass().getSimpleName();
-        logger.info("Method: {}.{} executed successfully, returned: {}", className, methodName, result);
-    }
+	// After returning advice: log method return details
+	@AfterReturning(pointcut = "applicationPackagePointcut()", returning = "result")
+	public void logAfterMethodExecution(JoinPoint joinPoint, Object result) {
+		String methodName = joinPoint.getSignature().getName();
+		String className = joinPoint.getTarget().getClass().getSimpleName();
+		logger.info("Method: {}.{} executed successfully, returned: {}", className, methodName, result);
+	}
 
-    // After throwing advice: log method exceptions
-    @AfterThrowing(pointcut = "applicationPackagePointcut()", throwing = "exception")
-    public void logMethodException(JoinPoint joinPoint, Throwable exception) {
-        String methodName = joinPoint.getSignature().getName();
-        String className = joinPoint.getTarget().getClass().getSimpleName();
-        logger.error("Exception in method: {}.{} with message: {}", className, methodName, exception.getMessage(), exception);
-    }
+	// After throwing advice: log method exceptions
+	@AfterThrowing(pointcut = "applicationPackagePointcut()", throwing = "exception")
+	public void logMethodException(JoinPoint joinPoint, Throwable exception) {
+		String methodName = joinPoint.getSignature().getName();
+		String className = joinPoint.getTarget().getClass().getSimpleName();
+		logger.error("Exception in method: {}.{} with message: {}", className, methodName, exception.getMessage(),
+				exception);
+	}
+
 }
